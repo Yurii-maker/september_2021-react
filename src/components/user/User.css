@@ -1,0 +1,4 @@
+.UserWrap {
+    display: flex;
+    justify-content: space-between;
+}
