@@ -13,7 +13,7 @@ function Launches() {
 
     return (
         <div>
-            {launches.map(value => <Launch missionName={value.mission_name} launchYear={value.launch_year}
+            {launches.map(value => <Launch key={value.flight_number} missionName={value.mission_name} launchYear={value.launch_year}
                                            pic={value.links.mission_patch_small}/>
             )}
         </div>
