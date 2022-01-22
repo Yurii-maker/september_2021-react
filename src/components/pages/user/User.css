@@ -1,0 +1,10 @@
+.UserWrap {
+    display: flex;
+    column-gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.Info {
+    width: 60%
+}

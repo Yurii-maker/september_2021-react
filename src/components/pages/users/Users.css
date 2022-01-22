@@ -1,0 +1,7 @@
+.UsersWrap {
+    display: flex;
+    justify-content: space-around;
+}
+.Outlet {
+    width: 50%;
+}

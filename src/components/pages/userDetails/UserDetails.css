@@ -1,0 +1,13 @@
+.DetailsWrap {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    row-gap: 10px;
+}
+
+button {
+    width: 100%
+}
