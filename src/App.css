@@ -1,0 +1,9 @@
+.Forms {
+    display: flex;
+    justify-content: space-evenly
+}
+
+.Animals {
+    display: flex;
+    justify-content: space-between;
+}
