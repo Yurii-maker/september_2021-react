@@ -1,0 +1,7 @@
+.Wrap {
+    display: flex
+}
+
+.Checked {
+    text-decoration: line-through;
+}
