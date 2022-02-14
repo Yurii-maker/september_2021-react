@@ -10,8 +10,8 @@ import StarRating from "../starRating/StarRating";
 
 const MovieDetails = () => {
 
-
-    const {movieDetails, status, error, theme} = useSelector(state => state['movieReducer']);
+    const {movieDetails, status, error} = useSelector(state => state['movieReducer']);
+    const {theme} = useSelector(state => state['themeReducer']);
     const dispatch = useDispatch();
     const {id} = useParams();
 

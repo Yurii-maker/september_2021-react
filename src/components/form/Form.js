@@ -16,7 +16,6 @@ const Form = () => {
         if (data.searchWord !== "") {
             dispatch(fillSearchStore(data))
             dispatch(getSearchMovie(data));
-            console.log(data)
             reset()
         }
 

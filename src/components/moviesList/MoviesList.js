@@ -8,7 +8,7 @@ import {
     getAllMovies,
     nextPage,
     previousPage,
-    searchMoviePagination
+    foundMoviesStore
 } from "../../store";
 import {MovieCard} from "../movieCard/MovieCard";
 import {Form} from "../form/Form";
@@ -17,16 +17,14 @@ import {Form} from "../form/Form";
 const MoviesList = () => {
     const {
         movies,
-        allGenres,
         status,
         error,
-        theme,
-        page,
         searchStore,
         temp
     } = useSelector(state => state['movieReducer']);
-
-
+    const {allGenres} = useSelector(state => state['genreReducer']);
+    const {page} = useSelector(state => state['paginationReducer']);
+    const {theme} = useSelector(state => state['themeReducer']);
     const dispatch = useDispatch();
 
 
@@ -38,13 +36,16 @@ const MoviesList = () => {
 
 
         if (temp) {
-            dispatch(searchMoviePagination({searchStore, page}))
+            dispatch(foundMoviesStore({searchStore, page}))
             dispatch(getAllGenres())
+
 
         }
 
     }, [page]);
     const {results: films, total_pages} = movies;
+
+
     const {genres} = allGenres;
 
     return (

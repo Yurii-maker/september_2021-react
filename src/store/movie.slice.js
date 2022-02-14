@@ -6,14 +6,11 @@ import {movieService} from "../services";
 const initialState = {
     movies: [],
     movieDetails: [],
-    allGenres: [],
-    status: null,
-    error: null,
-    id: null,
-    theme: 'dark',
-    page: 1,
     temp: false,
-    searchStore: ''
+    searchStore: '',
+    status: null,
+    error: null
+
 
 };
 
@@ -37,17 +34,8 @@ const getMovieDetails = createAsyncThunk('movieSlice/getMovieDetails',
         } catch (e) {
             return rejectWithValue(e.message)
         }
-    })
-const getAllGenres = createAsyncThunk('movieSlice/getAllGenres',
-    async (_, {rejectWithValue}) => {
-        try {
-            return await movieService.getGenres()
-        } catch (e) {
-            return rejectWithValue(e.message)
-        }
+    });
 
-    }
-);
 const getSearchMovie = createAsyncThunk('movieSlice/getSearchMovie',
     async (data, {rejectWithValue}) => {
         try {
@@ -58,56 +46,36 @@ const getSearchMovie = createAsyncThunk('movieSlice/getSearchMovie',
 
     }
 );
-const searchMoviePagination = createAsyncThunk('movieSlice/searchMoviePagination',
-    async ({searchStore, page}, {rejectWithValue}) => {
+const foundMoviesStore = createAsyncThunk('movieSlice/foundMoviesStore',
+    async ({searchStore, page}) => {
 
         try {
 
             return await movieService.getSearchMovies(searchStore, page)
 
         } catch (e) {
-            return rejectWithValue(e.message)
+
         }
 
     }
 )
 
+
 const movieSlice = createSlice({
         name: 'movieSlice',
         initialState,
         reducers: {
-            changeTheme: (state) => {
-                if (state.theme === 'light') {
-                    state.theme = 'dark'
-                } else if (state.theme === 'dark') {
-                    state.theme = 'light'
-                }
-
-            },
-            nextPage: (state, action) => {
-                if (state.page < action.payload) {
-                    state.page += 1
-                }
-
-
-            },
-            previousPage: (state) => {
-                if (state.page < 2) {
-                    state.page = 1
-                } else {
-                    state.page = state.page - 1
-                }
-
-            },
             fillSearchStore: (state, action) => {
                 state.searchStore = action.payload.searchWord
             },
-            reset: (state) => {
-                state.page = 1;
-                state.temp = false
-            }
+            resetTemp: (state) => {
+                state.temp = false;
 
+
+            }
         },
+
+
         extraReducers: {
             [getAllMovies.pending]: (state) => {
                 state.status = 'loading'
@@ -136,15 +104,7 @@ const movieSlice = createSlice({
                 state.status = 'rejected'
                 state.error = action.payload
             },
-            [getAllGenres.fulfilled]: (state, action) => {
-                state.status = 'fulfilled'
-                state.allGenres = action.payload
 
-            },
-            [getAllGenres.rejected]: (state, action) => {
-                state.status = 'rejected'
-                state.error = action.payload
-            },
             [getSearchMovie.pending]: (state) => {
                 state.status = 'loading'
                 state.error = null
@@ -159,25 +119,20 @@ const movieSlice = createSlice({
                 state.status = 'rejected'
                 state.error = action.payload
             },
-            [searchMoviePagination.pending]: (state) => {
-                state.status = 'loading'
-                state.error = null
 
-            },
-            [searchMoviePagination.fulfilled]: (state, action) => {
+            [foundMoviesStore.fulfilled]: (state, action) => {
                 state.status = 'fulfilled'
                 state.movies = action.payload
 
 
-            }, [searchMoviePagination.rejected]: (state, action) => {
-                state.status = 'rejected'
-                state.error = action.payload
-            },
+            }
+
+
         }
     }
 )
 const movieReducer = movieSlice.reducer;
 
 export default movieReducer;
-export {getAllMovies, getMovieDetails, getAllGenres, getSearchMovie, searchMoviePagination};
-export const {changeTheme, nextPage, previousPage, fillSearchStore, reset} = movieSlice.actions
+export {getAllMovies, getMovieDetails, getSearchMovie, foundMoviesStore};
+export const {fillSearchStore, resetTemp} = movieSlice.actions

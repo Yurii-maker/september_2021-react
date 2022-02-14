@@ -1,19 +1,16 @@
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
-import {reset} from "../../store";
+import {changeBg, resetPage, resetTemp} from "../../store";
 import './HomePage.css'
 
 
 const HomePage = () => {
-    const {theme} = useSelector(state => state['movieReducer']);
+    const {theme, bg} = useSelector(state => state['themeReducer']);
     const dispatch = useDispatch();
-    dispatch(reset())
-    let bg = ''
-
-    if (theme === 'dark') {
-        bg = 'Bg'
-    }
+    dispatch(resetPage());
+    dispatch(resetTemp());
+    dispatch(changeBg(theme));
 
     return (
 
